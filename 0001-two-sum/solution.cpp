@@ -1,26 +1,19 @@
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        unordered_map<int, int> cache;
-        vector<int> answer;
+        map<int,int>mp;
+        vector<int>ans;
         
-        for (size_t i = 0; i < nums.size(); ++i)
-        {
-            int needed_num = target - nums[i];
+        for(int i=0;i<nums.size();++i){
+            int numToFind = target - nums[i];
             
-            if (cache.find(needed_num) != cache.end())
-            {
-                // We found it
-                answer.push_back(cache[needed_num]);
-                answer.push_back(i);
-                return answer;
+            if(mp.find(numToFind) != mp.end()){
+                ans.push_back(mp[numToFind]);
+                ans.push_back(i);
+                return ans;
             }
-            else
-            {
-                // Didn't find it
-                cache.insert(make_pair(nums[i], i));
-            }
+            mp[nums[i]] = i;
         }
-        return answer;
+        return ans;
     }
 };
