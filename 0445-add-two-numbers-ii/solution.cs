@@ -10,37 +10,39 @@
  * }
  */
 public class Solution {
-    public ListNode AddTwoNumbers(ListNode l1, ListNode l2) {
-        //if(l1.next == null && l2.next == null) return l1;
-        string c1 = "", c2 = "";
-        
-        while(l1 != null){
-            c1 += Convert.ToString(l1.val);
-            l1 = l1.next;
-        }
-        while(l2 != null){
-            c2 += Convert.ToString(l2.val);
-            l2 = l2.next;
-        }
+    public ListNode ReverseList(ListNode c){
+        ListNode i = null, temp = null;
 
-        BigInteger num, num2;
-        BigInteger.TryParse(c1, out num);
-        BigInteger.TryParse(c2, out num2);
-        string s = Convert.ToString(num+=num2);
-
-        ListNode head = new ListNode(s[0] - '0');
-        for(int i=1; i<s.Length; i++){
-            AppEnd(head, s[i] - '0');
+        while(c != null){
+            temp = c.next;
+            c.next = i;
+            i = c;
+            c =temp;
         }
-
-        return head;
+        return i;
     }
 
-    public void AppEnd(ListNode head, int n){
-        ListNode aux = head;
-        while(aux.next != null){
-            aux = aux.next;
+    public ListNode AddTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode i = ReverseList(l1);
+        ListNode j = ReverseList(l2);
+        ListNode ans = new ListNode();
+        int carry = 0, sum = 0;
+        while(i != null || j != null){
+            if(i != null){
+                sum += i.val;
+                i = i.next;
+            }
+            if(j != null){
+                sum += j.val;
+                j = j.next;
+            }
+            ans.val = sum % 10;
+            carry = sum / 10;
+            ListNode head = new ListNode(carry);
+            head.next = ans;
+            ans = head;
+            sum = carry;
         }
-        aux.next = new ListNode(n);
+        return carry == 0? ans.next : ans;
     }
 }
