@@ -1,16 +1,17 @@
 public class Solution {
     public int[] TwoSum(int[] nums, int target) {
-        Dictionary<int, int> hash = new Dictionary<int, int>();
+        Dictionary<int, int> map = new Dictionary<int,int>();
 
-        for(int i=0; i<nums.Length; i++){
-            int n = nums[i];
-            int complement = target - n;
-            if(hash.ContainsKey(complement)){
-                return new int[] {hash[complement], i};                
+        for(int i = 0; i < nums.Length; i++){
+            int complement = target - nums[i];
+            if(map.ContainsKey(complement)){
+                return new int[]{i, map[complement]};
             }
-                
-            hash[nums[i]] = i;
+            else {
+                if(!map.ContainsKey(nums[i]))map.Add(nums[i], i);
+            }
         }
-        return new int[] {0};
+
+        return new int[]{};
     }
 }
