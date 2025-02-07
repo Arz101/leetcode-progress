@@ -11,19 +11,16 @@
  */
 class Solution {
 public:
-    stack<int> pila;
     bool hasPathSum(TreeNode* root, int targetSum) {
-        if(root == NULL) return false;
+        if (!root) return false; // Si el nodo es nulo, no hay camino.
+
+        // Restamos el valor del nodo actual del targetSum
+        targetSum -= root->val;
         
-        int n = targetSum - root->val;
-        pila.push(n);
-
-        if(!pila.empty() && root->right == NULL && root->left == NULL && n == 0) return true;
-
-        if(hasPathSum(root->left, n)) return true;
-
-        if(hasPathSum(root->right, n)) return true;
-
-        return false;
+        // Si llegamos a una hoja y targetSum es 0, encontramos un camino válido.
+        if (!root->left && !root->right) return targetSum == 0;
+        
+        // Recursión: Si cualquiera de los dos caminos devuelve true, retornamos true.
+        return hasPathSum(root->left, targetSum) || hasPathSum(root->right, targetSum);
     }
 };
