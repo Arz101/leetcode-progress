@@ -12,15 +12,12 @@
 class Solution {
 public:
     bool hasPathSum(TreeNode* root, int targetSum) {
-        if (!root) return false; // Si el nodo es nulo, no hay camino.
+        if(!root) return false;
 
-        // Restamos el valor del nodo actual del targetSum
         targetSum -= root->val;
-        
-        // Si llegamos a una hoja y targetSum es 0, encontramos un camino válido.
-        if (!root->left && !root->right) return targetSum == 0;
-        
-        // Recursión: Si cualquiera de los dos caminos devuelve true, retornamos true.
+
+        if(!root->left && !root->right) return targetSum == 0;
+
         return hasPathSum(root->left, targetSum) || hasPathSum(root->right, targetSum);
     }
 };
