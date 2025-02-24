@@ -12,37 +12,35 @@
 class Solution {
 public:
     TreeNode* recoverFromPreorder(string s) {
-        int index = 0;
         stack<TreeNode*> stack;
+        int index = 0;
 
         while(index < s.length()){
-            int depth = 0;
+            int dash = 0;
 
-            while(index < s.length() && s[index] == '-'){
-                depth++;
-                index++;
+            while(dash + index < s.length() && s[index + dash] == '-'){
+                dash++;
             }
 
+            index += dash;
             int value = 0;
+
             while(index < s.length() && isdigit(s[index])){
                 value = value * 10 + s[index] - '0';
                 index++;
             }
-
-            while(stack.size() > depth) stack.pop();
-
             TreeNode* root = new TreeNode(value);
+
+            while(stack.size() > dash) stack.pop();
 
             if(!stack.empty()){
                 if(stack.top()->left == nullptr) stack.top()->left = root;
                 else stack.top()->right = root;
             }
-
             stack.push(root);
         }
 
         while(stack.size() > 1) stack.pop();
-
         return stack.top();
     }
 };
